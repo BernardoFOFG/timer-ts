@@ -22,17 +22,18 @@ export const CyclesContextProvider = ({ children }: CycleContextProps) => {
     },
     (initialState) => {
       const storedStateAsJSON = localStorage.getItem(
-        '@ignite-timer:cycles.state-1.0.0',
+        '@ignite-timer:cycles-state-1.0.0',
       )
 
       if (storedStateAsJSON) {
         return JSON.parse(storedStateAsJSON)
       }
-      return { initialState }
+      return initialState
     },
   )
-  const { activeCycleId, cycles } = cyclesState
+  const { cycles, activeCycleId } = cyclesState
   const activeCycle = cycles.find((cycle) => cycle.id === activeCycleId)
+
   const [amountSecondsPassed, setAmountSecondsPassed] = useState(() => {
     if (activeCycle) {
       return differenceInSeconds(new Date(), new Date(activeCycle.startDate))
